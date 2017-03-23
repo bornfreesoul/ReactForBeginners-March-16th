@@ -1,25 +1,18 @@
 import React from 'react';
-import Footer from '../Footer/Footer'
+import { connect } from 'react-redux'
 
-const Intro = (props) => {
+const Intro = ({ username }) => {
   return (
     <div>
-      <h1>Hello {props.data.name}</h1>
-      <p>You are in {props.data.location}</p>
-      <p>The weather is {props.data.weather}</p>
-      <button onClick={() => props.sayHello('David')}>Say Hello</button>
-      <Footer
-        text="footer"
-        sayHello={props.sayHello}
-      />
+      <h1>Hello { username } </h1>
     </div>
   )
 }
 
-export default Intro;
+const mapStateToProps = (state) => {
+  return {
+    username: state.users.name
+  }
+}
 
-// const Intro = () => {
-//   return (
-//
-//   )
-// }
+export default connect(mapStateToProps)(Intro);

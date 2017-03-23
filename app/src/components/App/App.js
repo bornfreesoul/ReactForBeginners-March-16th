@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
 import './App.css';
 import Intro from '../Intro/Intro';
+import { connect } from 'react-redux';
+import { updateData } from '../../actions'
 
 class App extends Component {
-
-  constructor() {
-    super()
-
-    this.state = {
-      name: 'Ray',
-      location: 'Vancouver',
-      weather: 'Always raining!'
-    }
-
-    this.sayHello = this.sayHello.bind(this)
-  }
-
-  sayHello(name) {
-    this.setState({
-      name
-    })
-  }
-
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Welcome to React</h2>
+          <h2>You are based in: {this.props.location} </h2>
+          <button onClick={() => this.props.updateData('Ray', 'Californa')}>Click me</button>
         </div>
-        <Intro
-          data={this.state}
-          sayHello={this.sayHello}
-        />
+        <Intro />
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  updateData: (newName, newLocation) => dispatch(updateData(newName, newLocation))
+})
+
+const mapStateToProps = (state) => ({
+  location: state.users.location
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
